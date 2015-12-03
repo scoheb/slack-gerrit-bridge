@@ -3,9 +3,11 @@ package com.ericsson.itte.slack;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Properties;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.ericsson.itte.slack.gerrit.SlackGerritConnectionConfig;
 import com.ericsson.itte.slack.gerrit.SlackGerritConnectionListener;
@@ -32,11 +34,20 @@ public class App
     private static final String GERRIT_FRONTENDURL_PROPERTY = "GERRIT_FRONTENDURL";
     private static final String GERRIT_PROJECTSTOWATCH_PROPERTY = "GERRIT_PROJECTSTOWATCH";
 
+    private static Logger logger = LoggerFactory.getLogger(App.class);
+    
     public static void main(String[] args) throws IOException
     {
 
+        File propertiesFile = null;
+        if (args.length == 0) {
+            propertiesFile = new File(System.getProperty("user.dir") + "/" + DEFAULT_PROPERTIES_FILE);
+        } else {
+            propertiesFile = new File(args[0]);
+        }
+        logger.info("Loading " + propertiesFile.getAbsolutePath());
         Properties parameters = new Properties();
-        parameters.load(new FileReader(DEFAULT_PROPERTIES_FILE));
+        parameters.load(new FileReader(propertiesFile));
 
         //get token and channel name
         String tokenID = getProperty(parameters, SLACK_TOKENID_PROPERTY);
