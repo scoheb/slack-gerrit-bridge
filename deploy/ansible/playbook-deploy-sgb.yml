@@ -1,0 +1,15 @@
+---
+- hosts: 127.0.0.1
+
+  vars:
+    download_url: http://download.oracle.com/otn-pub/java/jdk/8u40-b26/jdk-8u40-linux-x64.rpm
+    download_folder: /tmp
+    java_name: "{{download_folder}}/jdk1.8.0_40"
+    java_archive: "{{download_folder}}/jdk-8u40-linux-x64.rpm"
+
+  tasks:
+  - name: Copy Jar
+    copy: src=../../target/slack-gerrit-bridge.jar dest=~/slack-gerrit-bridge.jar owner=deployment group=deployment mode=0644
+
+  - name: Copy Properties 
+    copy: src=../../prod-slack-gerrit-bridge.properties dest=~/slack-gerrit-bridge.properties owner=deployment group=deployment mode=0644

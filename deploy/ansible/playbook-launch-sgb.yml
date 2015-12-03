@@ -1,0 +1,10 @@
+---
+- hosts: 127.0.0.1
+
+  tasks:
+  - name: Launch Slack Gerrit Bridge 
+    command: /usr/java/latest/bin/java -jar ~/slack-gerrit-bridge.jar ~/slack-gerrit-bridge.properties
+    async: 99999 
+    poll: 0
+    register: foo
+  - debug: msg="the echo was {{ foo }}"
