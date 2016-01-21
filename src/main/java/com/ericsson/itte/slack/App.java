@@ -46,7 +46,7 @@ public class App
             propertiesFile = new File(args[0]);
         }
         logger.info("Loading " + propertiesFile.getAbsolutePath());
-        Properties parameters = new Properties();
+        XProperties parameters = new XProperties();
         parameters.load(new FileReader(propertiesFile));
 
         //get token and channel name
@@ -72,7 +72,7 @@ public class App
 
     }
 
-    private static String getProperty(Properties parameters, String propertyName) {
+    private static String getProperty(XProperties parameters, String propertyName) {
         String value = parameters.getProperty(propertyName);
         if (value == null) {
             throw new RuntimeException("Property " + propertyName + " not defined in " + DEFAULT_PROPERTIES_FILE);
@@ -80,7 +80,7 @@ public class App
         return value;
     }
 
-    private static void createAndStartGerritConnection(Properties parameters, SlackChannel generalChannel,
+    private static void createAndStartGerritConnection(XProperties parameters, SlackChannel generalChannel,
             SlackSession session) {
         SlackGerritConnectionListener gerritConnectionListener = new SlackGerritConnectionListener();
 
